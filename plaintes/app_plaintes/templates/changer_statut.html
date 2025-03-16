@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Changer Statut</title>
+</head>
+<body>
+    <h1>Changer le statut de {{ signalement }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="statut">Statut</label>
+        <select name="statut" id="statut">
+            <option value="en_attente">En attente</option>
+            <option value="en_cours">En cours</option>
+            <option value="resolu">Résolu</option>
+            <option value="rejete">Rejeté</option>
+        </select>
+        <button type="submit">Changer</button>
+    </form>
+</body>
+</html>

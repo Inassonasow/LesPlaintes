@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Signalements</title>
+</head>
+<body>
+    <h1>Gestion des Signalements</h1>
+    <table>
+        <tr>
+            <th>Signalement</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+        {% for signalement in signalements %}
+        <tr>
+            <td>{{ signalement }}</td>
+            <td>{{ signalement.get_statut_display }}</td>
+            <td>
+                <a href="{% url 'changer_statut' signalement.id %}">Changer Statut</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
