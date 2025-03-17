@@ -54,9 +54,9 @@ class ServiceTechnique(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.domaine_intervention}"
 
-# =======================
+
 # Modèles des Signalements
-# =======================
+
 
 class Signalement(models.Model):
     """Modèle pour le signalement des problèmes urbains"""
@@ -81,6 +81,11 @@ class Signalement(models.Model):
     statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='en_attente')
     date_signalement = models.DateTimeField(auto_now_add=True)
     service_technique = models.ForeignKey(ServiceTechnique, on_delete=models.SET_NULL, null=True, blank=True, related_name="interventions")
+
+    # Champs pour les fichiers multimédias
+    image = models.ImageField(upload_to='signalements/images/', blank=True, null=True)
+    video = models.FileField(upload_to='signalements/videos/', blank=True, null=True)
+    audio = models.FileField(upload_to='signalements/audios/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.get_type_probleme_display()} signalé par {self.citoyen.user.username} - {self.get_statut_display()}"

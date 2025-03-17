@@ -1,0 +1,69 @@
+<button type="submit"></button>
+    <a href="{% url 'espace_personnel' %}">
+        retour</a>
+<style>
+    /* Fixe la hauteur des cellules */
+    table td {
+        height: 100px;  /* Ajuste cette valeur selon tes besoins */
+        vertical-align: middle;  /* Centre le contenu verticalement */
+    }
+
+    /* Ajuste la taille des images */
+    table img {
+        max-width: 100px;  /* Limite la largeur de l'image */
+        max-height: 100px;  /* Limite la hauteur de l'image */
+        width: auto;  /* Garde le ratio de l'image */
+        height: auto;  /* Garde le ratio de l'image */
+    }
+
+    /* Ajuste la taille des vidéos */
+    table video {
+        max-width: 100px;  /* Limite la largeur de la vidéo */
+        max-height: 100px;  /* Limite la hauteur de la vidéo */
+        width: 100px;  /* Garde le ratio de la vidéo */
+        height: auto;  /* Garde le ratio de la vidéo */
+    }
+</style>
+
+<h1>Vos signalements</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Type de problème</th>
+            <th>Description</th>
+            <th>Adresse</th>
+            <th>Statut</th>
+            <th>Date du signalement</th>
+            <th>Image</th>
+            <th>Vidéo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for signalement in signalements %}
+        <tr>
+            <td>{{ signalement.get_type_probleme_display }}</td>
+            <td>{{ signalement.description }}</td>
+            <td>{{ signalement.adresse_signalement }}</td>
+            <td>{{ signalement.get_statut_display}}</td>
+            <td>{{ signalement.date_signalement }}</td>
+            <td>
+                {% if signalement.image %}  <!-- Vérifie si une image existe -->
+                    <img src="{{ signalement.image.url }}" alt="Image du signalement">  <!-- Affiche l'image -->
+                {% else %}
+                    Pas d'image  <!-- Message si aucune image n'est disponible -->
+                {% endif %}
+            </td>
+            <td>
+                {% if signalement.video %}  <!-- Vérifie si une vidéo existe -->
+                    <video controls>
+                        <source src="{{ signalement.video.url }}" type="video/mp4">  <!-- Affiche la vidéo -->
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                {% else %}
+                    Pas de vidéo  <!-- Message si aucune vidéo n'est disponible -->
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

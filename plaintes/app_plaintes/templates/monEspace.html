@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'logout' %}" method="post" onsubmit="return confirmDeconnexion()">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Déconnexion</button>
+    </form>
+    <script>
+        function confirmDeconnexion() {
+            // Affiche une boîte de dialogue de confirmation
+            return confirm("Voulez-vous vraiment vous déconnecter ? Vous perdrez l'accès à votre espace personnel.");
+        }
+    </script>
+
+    <a href="{% url 'signaler_probleme' %}">
+        <button>Signaler un Problème</button>
+    </a>
+    
+
+    <a href="{% url 'verification' %}">
+        <button>mes signalement</button>
+    </a>
+    
+    <h1>ton espace personnel pour mieu gerer tes signalament</h1>
+</body>
+</html>

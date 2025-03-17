@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -124,6 +125,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Fichiers multimédias
+MEDIA_URL = '/media/'  # URL pour accéder aux fichiers multimédias
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Dossier où les fichiers multimédias sont stockés
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -134,3 +140,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'  # Page de connexion pour les utilisateurs non connectés
 LOGIN_REDIRECT_URL = 'signaler_probleme'  # Redirection après connexion réussie
 LOGOUT_REDIRECT_URL = '/'  # (Facultatif) Page d'accueil après déconnexion
+
+

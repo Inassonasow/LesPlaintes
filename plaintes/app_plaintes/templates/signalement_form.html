@@ -5,11 +5,19 @@
     <title>Ajouter un Signalement</title>
 </head>
 <body>
+    
+
+    
+
+
     <h1>Ajouter un Signalement</h1>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Soumettre</button>
     </form>
+    <button type="submit"></button>
+    <a href="{% url 'espace_personnel' %}">
+        retour</a>
 </body>
 </html>

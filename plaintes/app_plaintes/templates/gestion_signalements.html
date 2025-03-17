@@ -2,25 +2,64 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Gestion des Signalements</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des signalements</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Gestion des Signalements</h1>
-    <table>
+    <form action="{% url 'logout' %}" method="post"onsubmit="return confirmDeconnexion()" >
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Déconnexion</button>
+    </form>
+    <script>
+        function confirmDeconnexion() {
+            // Affiche une boîte de dialogue de confirmation
+            return confirm("Voulez-vous vraiment vous déconnecter ? Vous perdrez l'accès à votre espace personnel.");
+        }
+    </script>
+    <div class="container">
+        <h2 class="mt-4">Gestion des signalements</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Citoyen</th>  <!-- Nouvelle colonne pour le citoyen -->
+                    <th>Adresse</th>  <!-- Nouvelle colonne pour l'adresse -->
+                    <th>Type de problème</th>
+                    <th>Description</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for signalement in signalements %}
         <tr>
-            <th>Signalement</th>
-            <th>Statut</th>
-            <th>Actions</th>
-        </tr>
-        {% for signalement in signalements %}
-        <tr>
-            <td>{{ signalement }}</td>
+            <td>{{ signalement.id }}</td>
+            <td>{{ signalement.citoyen.user.username }}</td>
+            <td>{{ signalement.citoyen.adresse }}</td>
+            <td>{{ signalement.get_type_probleme_display }}</td>
+            <td>{{ signalement.description }}</td>
             <td>{{ signalement.get_statut_display }}</td>
             <td>
-                <a href="{% url 'changer_statut' signalement.id %}">Changer Statut</a>
+                {% if signalement.image %}  <!-- Vérifie si une image existe -->
+                    <img src="{{ signalement.image.url }}" alt="Image du signalement" style="max-width: 100px;">  <!-- Affiche l'image -->
+                {% else %}
+                    Pas d'image  <!-- Message si aucune image n'est disponible -->
+                {% endif %}
+            </td>
+            <td>
+                {% if signalement.video %}  <!-- Vérifie si une vidéo existe -->
+                    <video controls style="max-width: 100px; height: auto;">
+                        <source src="{{ signalement.video.url }}" type="video/mp4">  <!-- Affiche la vidéo -->
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                {% else %}
+                    Pas de vidéo  <!-- Message si aucune vidéo n'est disponible -->
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
-    </table>
+    </tbody>
+    </div>
 </body>
 </html>
