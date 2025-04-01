@@ -23,6 +23,8 @@ class CustomUser(AbstractUser):
     matricule = models.CharField(max_length=50, unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     is_active = models.BooleanField(default=True)
+    # Dans CustomUser, ajouter:
+   
 
     groups = models.ManyToManyField(Group, related_name='customuser_set')
     user_permissions = models.ManyToManyField(Permission, related_name='customuser_permissions_set')
@@ -81,6 +83,10 @@ class Signalement(models.Model):
     statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='en_attente')
     date_signalement = models.DateTimeField(auto_now_add=True)
     service_technique = models.ForeignKey(ServiceTechnique, on_delete=models.SET_NULL, null=True, blank=True, related_name="interventions")
+    # Champs pour la localisation 📍
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+
 
     # Champs pour les fichiers multimédias
     image = models.ImageField(upload_to='signalements/images/', blank=True, null=True)

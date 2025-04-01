@@ -20,7 +20,7 @@ class CitoyenCreationForm(UserCreationForm):
 class SignalementForm(forms.ModelForm):
     class Meta:
         model = Signalement
-        fields = ['type_probleme', 'description', 'adresse_signalement','image', 'video', 'audio']
+        fields = ['type_probleme', 'description', 'adresse_signalement','image', 'video', 'audio','longitude','latitude']
 
 
 class LoginForm(AuthenticationForm):

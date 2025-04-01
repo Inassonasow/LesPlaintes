@@ -13,9 +13,33 @@
     <h1>Ajouter un Signalement</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Soumettre</button>
-    </form>
+    {{ form.as_p }}
+
+    <!-- Champs cachés pour stocker les coordonnées GPS -->
+    <input type="hidden" name="latitude" id="id_latitude">
+    <input type="hidden" name="longitude" id="id_longitude">
+
+
+
+    <button type="submit">Signaler</button>
+</form>
+
+<!-- Script pour récupérer la position GPS -->
+<script>
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                document.getElementById("id_latitude").value = position.coords.latitude;
+                document.getElementById("id_longitude").value = position.coords.longitude;
+            });
+        } else {
+            alert("La géolocalisation n'est pas supportée par votre navigateur.");
+        }
+    }
+    
+    // Exécuter la fonction dès que la page est chargée
+    window.onload = getLocation;
+</script>
     <button type="submit"></button>
     <a href="{% url 'espace_personnel' %}">
         retour</a>

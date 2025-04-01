@@ -65,12 +65,25 @@ def signaler_probleme(request):
         if form.is_valid():
             signalement = form.save(commit=False)
             signalement.citoyen = request.user.citoyen  # On lie le signalement au citoyen connecté
+            # Récupérer les coordonnées GPS depuis le formulaire
+            latitude = request.POST.get('latitude')
+            longitude = request.POST.get('longitude')
+            
+            # Vérifie si les valeurs existent avant d'enregistrer
+            if latitude and longitude:
+                signalement.latitude = latitude
+                signalement.longitude = longitude
+
+            print(f"Latitude enregistrée : {signalement.latitude}")
+            print(f"Longitude enregistrée : {signalement.longitude}")
+
             signalement.save()
             return redirect('signalement_confirmation')
     else:
         form = SignalementForm()
     
     return render(request, 'signalement_form.html', {'form': form})
+
 
 
 
